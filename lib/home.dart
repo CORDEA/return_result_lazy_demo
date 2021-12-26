@@ -17,7 +17,8 @@ class HomePage extends StatelessWidget {
               final result = await Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const UserPage(following: true),
+                  builder: (context) =>
+                      const WillPopScopeUserPage(following: true),
                 ),
               );
               print(result);
@@ -25,7 +26,15 @@ class HomePage extends StatelessWidget {
             child: const Text('Open'),
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () async {
+              final result = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const UserPage(following: true),
+                ),
+              );
+              print(result);
+            },
             child: const Text('Open'),
           ),
         ],

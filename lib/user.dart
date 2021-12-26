@@ -22,15 +22,68 @@ class _UserPageState extends State<UserPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('User')),
-      body: Center(
-        child: ElevatedButton(
+      body: _UserPageBody(
+        onPressed: () {
+          setState(() {
+            following = !following;
+          });
+        },
+      ),
+    );
+  }
+}
+
+class WillPopScopeUserPage extends StatefulWidget {
+  const WillPopScopeUserPage({Key? key, required this.following})
+      : super(key: key);
+
+  final bool following;
+
+  @override
+  State<WillPopScopeUserPage> createState() => _WillPopScopeUserPageState();
+}
+
+class _WillPopScopeUserPageState extends State<WillPopScopeUserPage> {
+  late bool following;
+
+  @override
+  void initState() {
+    super.initState();
+    following = widget.following;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('User')),
+      body: WillPopScope(
+        child: _UserPageBody(
           onPressed: () {
             setState(() {
-              following = !widget.following;
+              following = !following;
             });
           },
-          child: const Text('Follow'),
         ),
+        onWillPop: () async {
+          Navigator.pop(context, following);
+          return false;
+        },
+      ),
+    );
+  }
+}
+
+class _UserPageBody extends StatelessWidget {
+  const _UserPageBody({Key? key, required this.onPressed}) : super(key: key);
+
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: ElevatedButton(
+        onPressed: onPressed,
+        child: const Text('Follow'),
       ),
     );
   }

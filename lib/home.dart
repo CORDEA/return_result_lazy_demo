@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'material_page_result_propagation_route.dart';
 import 'user.dart';
 
 class HomePage extends StatelessWidget {
@@ -29,8 +30,11 @@ class HomePage extends StatelessWidget {
             onPressed: () async {
               final result = await Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => const UserPage(following: true),
+                MaterialPageResultPropagationRoute<bool>(
+                  builder: (context, sink) => UserPage(
+                    following: true,
+                    resultSink: sink,
+                  ),
                 ),
               );
               print(result);

@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 
+import 'material_page_result_propagation_route.dart';
+
 class UserPage extends StatefulWidget {
-  const UserPage({Key? key, required this.following}) : super(key: key);
+  const UserPage({
+    Key? key,
+    required this.following,
+    required this.resultSink,
+  }) : super(key: key);
 
   final bool following;
+  final MaterialPageResultSink<bool> resultSink;
 
   @override
   State<UserPage> createState() => _UserPageState();
@@ -27,6 +34,7 @@ class _UserPageState extends State<UserPage> {
           setState(() {
             following = !following;
           });
+          widget.resultSink.emit(following);
         },
       ),
     );
